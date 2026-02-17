@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+define('LARAVEL_START', microtime(true));
+
+// Register the auto loader as early as possible, so that we have access
+// to the vendor packages so we can call Composer packages' functions
+// to check on our environment options before the application boots up.
+
+require __DIR__.'/vendor/autoload.php';
+
+$app = require_once __DIR__.'/bootstrap/app.php';
+
+$kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
+
+$status = $kernel->handle(
+    $input = new \Symfony\Component\Console\Input\ArgvInput,
+    new \Symfony\Component\Console\Output\ConsoleOutput
+);
+
+exit($status);
